@@ -1,0 +1,109 @@
+<section class="skills-section" [@fadeInUp] id="skills">
+  <div class="skills-container">
+    <div class="skills-header">
+      <div class="header-content">
+        <p class="section-tag">Technical Capabilities</p>
+        <h2 class="section-title">Engineering Skills & Domain Strength</h2>
+        <p class="section-subtitle">
+          A focused view of the tools, platforms, and delivery practices used to build reliable systems and ship product-ready solutions.
+        </p>
+      </div>
+
+      <div class="skills-summary-stats">
+        <div class="summary-stat">
+          <div class="summary-stat-value">{{ getTotalSkillsCount() }}</div>
+          <div class="summary-stat-label">Core Competencies</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat-value">{{ getProficiencyDistribution().advanced + getProficiencyDistribution().expert }}</div>
+          <div class="summary-stat-label">Advanced+</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat-value">{{ skills.length }}</div>
+          <div class="summary-stat-label">Capability Areas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-categories-tabs" [@staggerCards]>
+      <button *ngFor="let group of skills"
+              class="category-tab"
+              [class.active]="selectedSkillGroup === group"
+              (click)="selectSkillGroup(group)"
+              [style.--category-color]="group.color">
+        <span class="tab-icon">{{ group.icon }}</span>
+        <span class="tab-name">{{ group.name }}</span>
+        <span class="tab-level">{{ group.level }}%</span>
+      </button>
+    </div>
+
+    <div class="skills-display-section" *ngIf="selectedSkillGroup" [@slideInLeft]>
+      <div class="category-header">
+        <div class="category-title-section">
+          <p class="category-eyebrow">Selected Focus Area</p>
+          <h3 class="category-title">{{ selectedSkillGroup.name }}</h3>
+          <p class="category-description">{{ selectedSkillGroup.description }}</p>
+        </div>
+        <div class="category-level-indicator">
+          <div class="level-bar">
+            <div class="level-fill" [style.width.%]="selectedSkillGroup.level"></div>
+          </div>
+          <span class="level-text">{{ selectedSkillGroup.level }}% depth of capability</span>
+        </div>
+      </div>
+
+      <div class="skills-items-grid" [@staggerCards]>
+        <div *ngFor="let item of selectedSkillGroup.items; let i = index"
+             class="skill-item-card"
+             (mouseenter)="hoveredSkillIndex = i"
+             (mouseleave)="hoveredSkillIndex = null"
+             [class.hovered]="hoveredSkillIndex === i">
+          <div class="skill-card-content">
+            <div class="skill-name-section">
+              <span class="skill-icon">{{ item.icon || '→' }}</span>
+              <h4 class="skill-name">{{ item.name }}</h4>
+            </div>
+
+            <div class="proficiency-section">
+              <span class="proficiency-label">{{ getProficiencyLabel(item.proficiency) }}</span>
+              <span class="skill-strength">{{ item.proficiency }}%</span>
+            </div>
+
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill"
+                   [style.width.%]="item.proficiency"
+                   [style.--skill-color]="getProficiencyColor(item.proficiency)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-skills-section" [@slideInLeft]>
+      <div class="top-skills-header">
+        <div>
+          <p class="top-skills-eyebrow">Most Frequently Applied</p>
+          <h3 class="top-skills-title">Core Strengths</h3>
+        </div>
+        <p class="top-skills-subtitle">Highest-confidence capabilities across delivery, architecture, and systems work.</p>
+      </div>
+
+      <div class="top-skills-list">
+        <div *ngFor="let skill of getTopSkills(); let rank = index"
+             class="top-skill-item"
+             [style.--rank]="rank + 1">
+          <div class="rank-badge">{{ rank + 1 }}</div>
+          <div class="top-skill-info">
+            <span class="top-skill-name">{{ skill.name }}</span>
+            <div class="top-skill-progress">
+              <div class="top-skill-bar">
+                <div class="top-skill-fill" [style.width.%]="skill.proficiency"></div>
+              </div>
+              <span class="top-skill-percent">{{ skill.proficiency }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

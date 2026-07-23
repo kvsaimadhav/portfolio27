@@ -1,0 +1,102 @@
+<section id="about" class="about" [@fadeInUp]>
+  <div class="about-container">
+    <div class="about-header">
+      <div class="section-eyebrow">About</div>
+      <h2 class="section-title">
+        <span class="title-text">Professional Profile</span>
+      </h2>
+      <p class="section-subtitle">
+        I build reliable systems and cloud-enabled operations with a pragmatic focus on stability, automation, and long-term service quality.
+      </p>
+    </div>
+
+    <div class="about-content">
+      <div class="about-story" [@staggerContainer]>
+        <div class="story-card">
+          <div class="story-intro">
+            <span class="story-label">Engineering approach</span>
+            <h3>Operationally sound. Architecturally thoughtful. Delivery-focused.</h3>
+          </div>
+
+          <p class="story-copy">
+            I bring a practical perspective to systems administration, AWS-oriented delivery, and DevOps execution. My work is centered on strengthening platform resilience, simplifying operational complexity, and helping teams run dependable services with confidence.
+          </p>
+
+          <div class="story-highlights">
+            <div class="highlight-item">
+              <span class="highlight-icon">01</span>
+              <div>
+                <strong>Reliability-first delivery</strong>
+                <p>Designing environments around stability, observability, and consistent performance.</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-icon">02</span>
+              <div>
+                <strong>Cloud-native execution</strong>
+                <p>Applying AWS-focused practices to support secure and scalable operational environments.</p>
+              </div>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-icon">03</span>
+              <div>
+                <strong>Practical automation</strong>
+                <p>Reducing repetitive work while improving repeatability and speed of delivery.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-focus" [@slideInRight]>
+        <div class="focus-panel">
+          <div class="panel-header">
+            <span class="panel-label">Core focus areas</span>
+            <div class="panel-pill">Available for strategic roles</div>
+          </div>
+
+          <div class="about-tabs">
+            <button
+              *ngFor="let tab of aboutTabs"
+              class="tab-btn"
+              [class.active]="activeTab === tab.id"
+              (click)="switchTab(tab.id)"
+              [attr.aria-label]="'Switch to ' + tab.label + ' tab'"
+              type="button"
+            >
+              <span class="tab-icon">{{ tab.icon }}</span>
+              <span class="tab-label">{{ tab.label }}</span>
+            </button>
+          </div>
+
+          <div class="tab-content" *ngIf="getCurrentTab()" [@fadeInUp]>
+            <h3 class="tab-title">{{ getCurrentTab()?.label }}</h3>
+            <p class="tab-description">{{ getCurrentTab()?.content }}</p>
+
+            <ul class="focus-points">
+              <li class="focus-point" *ngFor="let point of getCurrentTab()?.points">
+                <span class="focus-point-icon">•</span>
+                <span>{{ point }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="focus-metrics">
+            <div class="metric-card">
+              <span class="metric-value">4+</span>
+              <span class="metric-label">Years in operations</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">AWS</span>
+              <span class="metric-label">Cloud focus</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">24/7</span>
+              <span class="metric-label">Reliability mindset</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
