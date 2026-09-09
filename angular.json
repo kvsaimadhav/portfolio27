@@ -37,10 +37,7 @@
                 "output": "/"
               }
             ],
-            "styles": [
-              "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.css"
-            ],
+            "styles": ["src/styles.css", "src/layout-fixes.css", "src/section-backgrounds.css", "src/creative-enhancements.css"],
             "scripts": []
           },
           "configurations": {

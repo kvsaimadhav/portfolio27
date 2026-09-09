@@ -1,22 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private key = 'portfolio-theme';
+  private readonly key = 'portfolio-theme';
+  readonly theme = signal<'light' | 'dark'>('dark');
 
-  initTheme() {
-    const saved = localStorage.getItem(this.key) || 'dark';
-    document.documentElement.setAttribute('data-theme', saved);
+  initTheme(): void {
+    const saved = localStorage.getItem(this.key) as 'light' | 'dark' | null;
+    const preferred = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    this.apply(saved ?? preferred, false);
   }
 
-  toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem(this.key, next);
+  toggleTheme(): void {
+    this.apply(this.theme() === 'dark' ? 'light' : 'dark');
   }
 
   isDark(): boolean {
-    return document.documentElement.getAttribute('data-theme') === 'dark';
+    return this.theme() === 'dark';
+  }
+
+  private apply(theme: 'light' | 'dark', persist = true): void {
+    this.theme.set(theme);
+    document.documentElement.dataset['theme'] = theme;
+    document.documentElement.style.colorScheme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#07111f' : '#f4f7fb');
+    if (persist) localStorage.setItem(this.key, theme);
   }
 }

@@ -1,0 +1,103 @@
+/* Contextual imagery and the stronger glass layer are kept global so every
+   portfolio section follows the same visual contract. */
+main section[id]{
+  isolation:isolate;
+  overflow:hidden;
+  background-color:var(--bg);
+  background-image:var(--section-overlay),var(--section-image);
+  background-position:center;
+  background-size:cover;
+  background-attachment:scroll;
+}
+
+main section[id]::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(180deg,var(--bg) 0,transparent 8%,transparent 92%,var(--bg) 100%);
+}
+
+#home,#about,#experience{
+  --section-image:url('/assets/images/section-engineering.jpg');
+  --section-overlay:linear-gradient(90deg,rgba(5,15,28,.68),rgba(5,15,28,.35) 48%,rgba(5,15,28,.2));
+}
+
+#skills,#cloud{
+  --section-image:url('/assets/images/section-cloud.jpg');
+  --section-overlay:linear-gradient(90deg,rgba(5,15,28,.48),rgba(5,15,28,.26),rgba(5,15,28,.46));
+}
+
+#projects,#education,#recognition,#contact{
+  --section-image:url('/assets/images/section-impact.jpg');
+  --section-overlay:linear-gradient(90deg,rgba(5,15,28,.5),rgba(5,15,28,.3),rgba(5,15,28,.42));
+}
+
+.glass,
+.surface,
+.principles article,
+.cloud-notes article{
+  background:linear-gradient(145deg,rgba(15,32,52,.62),rgba(8,20,35,.46))!important;
+  border-color:rgba(190,220,255,.32)!important;
+  box-shadow:0 24px 65px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(14px) saturate(155%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(155%)!important;
+}
+
+.experience-card:hover,.skill-card:hover,.project-card:hover,.education-card:hover,.recognition-card:hover{
+  border-color:rgba(90,165,255,.55)!important;
+  box-shadow:0 24px 65px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.09)!important;
+}
+
+:root[data-theme='light'] main section[id]{
+  --section-overlay:linear-gradient(90deg,rgba(241,246,252,.7),rgba(241,246,252,.48),rgba(241,246,252,.56));
+}
+
+:root[data-theme='light'] #home,
+:root[data-theme='light'] #about,
+:root[data-theme='light'] #experience{
+  --section-image:url('/assets/images/section-engineering-light.jpg');
+  --section-overlay:linear-gradient(90deg,rgba(248,250,253,.7),rgba(248,250,253,.3) 52%,rgba(248,250,253,.14));
+}
+
+:root[data-theme='light'] #skills,
+:root[data-theme='light'] #cloud{
+  --section-image:url('/assets/images/section-cloud-light.jpg');
+  --section-overlay:linear-gradient(90deg,rgba(248,250,253,.48),rgba(248,250,253,.2),rgba(248,250,253,.4));
+}
+
+:root[data-theme='light'] #projects,
+:root[data-theme='light'] #education,
+:root[data-theme='light'] #recognition,
+:root[data-theme='light'] #contact{
+  --section-image:url('/assets/images/section-impact-light.jpg');
+  --section-overlay:linear-gradient(90deg,rgba(248,250,253,.5),rgba(248,250,253,.22),rgba(248,250,253,.34));
+}
+
+:root[data-theme='light'] main section[id]::before{
+  background:linear-gradient(180deg,var(--bg) 0,transparent 15%,transparent 85%,var(--bg) 100%);
+}
+
+:root[data-theme='light'] .glass,
+:root[data-theme='light'] .surface,
+:root[data-theme='light'] .principles article,
+:root[data-theme='light'] .cloud-notes article{
+  background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(237,244,252,.52))!important;
+  border-color:rgba(49,91,141,.28)!important;
+  box-shadow:0 20px 55px rgba(29,55,89,.16),inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+
+@media(max-width:760px){
+  main section[id]{background-position:center;background-attachment:scroll}
+  #home,#about,#experience,#skills,#cloud,#projects,#education,#recognition,#contact{
+    --section-overlay:linear-gradient(rgba(5,15,28,.58),rgba(5,15,28,.42));
+  }
+  :root[data-theme='light'] #home,:root[data-theme='light'] #about,:root[data-theme='light'] #experience,
+  :root[data-theme='light'] #skills,:root[data-theme='light'] #cloud,:root[data-theme='light'] #projects,
+  :root[data-theme='light'] #education,:root[data-theme='light'] #recognition,:root[data-theme='light'] #contact{
+    --section-overlay:linear-gradient(rgba(241,246,252,.68),rgba(241,246,252,.52));
+  }
+}
+
+@media(prefers-reduced-motion:reduce){main section[id]{background-attachment:scroll}}
