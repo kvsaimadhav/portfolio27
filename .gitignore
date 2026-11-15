@@ -40,3 +40,11 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Claude Code (local-only: agents, skills and settings are NOT version-controlled; CLAUDE.md at the root IS tracked)
+.claude/
+CLAUDE.md
+
+# Local environment files
+.env
+.env.*

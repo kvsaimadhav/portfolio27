@@ -1,14 +1,435 @@
 <a class="skip-link" href="#main-content">Skip to content</a>
-<header class="site-header" [class.compact]="scrolled()"><nav class="nav-shell glass" aria-label="Primary navigation"><button class="brand" type="button" (click)="scrollTo('home')" aria-label="Sai Madhav, go to home"><span class="brand-mark">SM</span><span><strong>Sai Madhav</strong><small>Software · Cloud · Platform</small></span></button><div class="desktop-nav">@for(item of navItems;track item[0]){<button type="button" (click)="scrollTo(item[0])" [class.active]="activeSection()===item[0]">{{item[1]}}</button>}</div><div class="nav-actions"><button class="icon-button" type="button" (click)="toggleTheme()" [attr.aria-label]="theme()==='dark'?'Switch to light mode':'Switch to dark mode'">{{theme()==='dark'?'☼':'☾'}}</button><a class="resume-link" href="assets/SaiMadhav_Resume.pdf" download>Resume ↓</a><button class="menu-button" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-controls="mobile-menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button></div></nav><div id="mobile-menu" class="mobile-menu glass" [class.open]="menuOpen()" [attr.aria-hidden]="!menuOpen()">@for(item of navItems;track item[0]){<button type="button" (click)="scrollTo(item[0])">{{item[1]}} <span>↗</span></button>}<a href="assets/SaiMadhav_Resume.pdf" download (click)="closeMenu()">Download resume <span>↓</span></a></div></header>
+
+<!-- ───────────────────────── Header ───────────────────────── -->
+<header class="site-header" [class.compact]="scrolled()">
+  <nav class="nav-shell glass" aria-label="Primary navigation">
+    <button class="brand" type="button" (click)="scrollTo('home')" aria-label="Sai Madhav, go to home">
+      <span class="brand-mark" aria-hidden="true">SM</span>
+      <span class="brand-text">
+        <strong>Sai Madhav</strong>
+        <small>Software · Cloud · Platform</small>
+      </span>
+    </button>
+
+    <div class="desktop-nav">
+      @for (item of navItems; track item[0]) {
+        <button type="button" (click)="scrollTo(item[0])" [class.active]="activeSection() === item[0]" [attr.aria-current]="activeSection() === item[0] ? 'true' : null">{{ item[1] }}</button>
+      }
+    </div>
+
+    <div class="nav-actions">
+      <button class="icon-button theme-toggle" type="button" (click)="toggleTheme()" [attr.aria-label]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+        @if (theme() === 'dark') {
+          <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6" /></svg>
+        } @else {
+          <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 14.6A8.3 8.3 0 0 1 9.4 3.8a8.3 8.3 0 1 0 10.8 10.8Z" /></svg>
+        }
+      </button>
+      <a class="resume-link" href="assets/SaiMadhav_Resume.pdf" download>Résumé <span aria-hidden="true">↓</span></a>
+      <button class="menu-button" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-controls="mobile-menu" aria-label="Toggle navigation">
+        <span></span><span></span>
+      </button>
+    </div>
+    <span class="scroll-progress" aria-hidden="true"></span>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu glass" [class.open]="menuOpen()" [attr.aria-hidden]="!menuOpen()">
+    @for (item of navItems; track item[0]; let i = $index) {
+      <button type="button" (click)="scrollTo(item[0])" [class.active]="activeSection() === item[0]">
+        <small aria-hidden="true">{{ ('0' + (i + 1)).slice(-2) }}</small>{{ item[1] }} <span aria-hidden="true">↗</span>
+      </button>
+    }
+    <a href="assets/SaiMadhav_Resume.pdf" download (click)="closeMenu()">Download résumé <span aria-hidden="true">↓</span></a>
+  </div>
+</header>
+
 <main id="main-content">
-<section id="home" class="hero section"><div class="hero-grid container"><div class="hero-copy reveal is-visible"><p class="eyebrow"><span class="status-dot"></span> Open to senior engineering opportunities</p><h1>Kaza Venkata<br><span>Sai Madhav</span></h1><p class="hero-role">Senior Software Developer</p><p class="hero-lead">Full Stack Engineering <i>•</i> DevOps <i>•</i> AWS <i>•</i> Kubernetes <i>•</i> Cloud Infrastructure</p><p class="hero-summary">I build dependable software and cloud platforms across application delivery, infrastructure operations, automation, and production reliability—bringing four-plus years of hands-on engineering experience and team leadership.</p><div class="button-row"><button class="button primary" type="button" (click)="scrollTo('experience')">Explore experience <span>→</span></button><a class="button secondary" href="assets/SaiMadhav_Resume.pdf" download>Download résumé <span>↓</span></a><button class="text-link" type="button" (click)="scrollTo('contact')">Contact me</button></div><div class="social-row" aria-label="Social profiles">@for(social of socials;track social.label){<a [href]="social.url" [attr.target]="social.url.startsWith('http')?'_blank':null" rel="noopener noreferrer" [attr.aria-label]="social.label"><span>{{social.icon}}</span>{{social.label}}</a>}</div></div><aside class="hero-panel glass reveal is-visible" aria-label="Engineering profile"><div class="portrait-wrap"><img src="assets/images/madhav-portfolio.png" alt="Kaza Venkata Sai Madhav" width="1024" height="1536" fetchpriority="high"><span class="availability">Available</span></div><div class="panel-heading"><span>Engineering profile</span><strong>Build. Automate. Operate.</strong></div><div class="signal-grid"><div><strong>4+</strong><span>Years experience</span></div><div><strong>15</strong><span>Team leadership</span></div><div><strong>AWS</strong><span>Cloud delivery</span></div><div><strong>99.9%</strong><span>Supported SLA</span></div></div><div class="terminal-line"><span>$</span> shipping reliable systems<span class="cursor"></span></div></aside></div></section>
-<section id="about" class="section about-section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">01 · About</p><h2>Engineering with an<br><span>operations mindset.</span></h2></div><p>I work at the intersection of full-stack development, systems administration, cloud operations, and DevOps delivery—where clean application architecture meets real production responsibility.</p></div><div class="about-layout"><article class="story-card surface"><p>My approach is grounded in ownership: understand the system, remove operational friction, automate repeatable work, and leave services more resilient than I found them. Across software, databases, and infrastructure, I balance delivery speed with security, observability, and long-term maintainability.</p><p>At Ekluvya, that means leading engineers through the SDLC while supporting AWS environments, CI/CD, and multiple product initiatives. Earlier roles span defense-grade projects, mission-critical Oracle systems, and enterprise Java applications.</p></article><div class="principles"><article><span>01</span><div><h3>Full-stack delivery</h3><p>Modern frontend, APIs, enterprise Java, and data systems.</p></div></article><article><span>02</span><div><h3>Cloud infrastructure</h3><p>AWS environments designed for security, scale, and cost awareness.</p></div></article><article><span>03</span><div><h3>Production reliability</h3><p>Automation, monitoring, recovery, and operational continuity.</p></div></article><article><span>04</span><div><h3>Technical leadership</h3><p>Practical mentoring and coordinated delivery across engineering teams.</p></div></article></div></div></div></section>
-<section id="experience" class="section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">02 · Experience</p><h2>From application code to<br><span>production operations.</span></h2></div><p>Four roles across product engineering, defense programs, databases, and enterprise software—each with increasing ownership and technical breadth.</p></div><div class="timeline">@for(experience of experiences;track experience.company;let i=$index){<article class="experience-card surface" [class.current]="experience.current"><div class="timeline-marker"><span>{{('0'+(experiences.length-i)).slice(-2)}}</span></div><div class="experience-meta">@if(experience.current){<span class="current-badge">Current role</span>}<p>{{experience.period}}</p><small>{{experience.duration}}</small></div><div class="experience-body"><p class="company">{{experience.company}}</p><h3>{{experience.role}}</h3><ul>@for(item of experience.highlights;track item){<li>{{item}}</li>}</ul><div class="chips">@for(tech of experience.technologies;track tech){<span>{{tech}}</span>}</div></div></article>}</div></div></section>
-<section id="skills" class="section skills-section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">03 · Capabilities</p><h2>A practical, production-ready<br><span>engineering toolkit.</span></h2></div><p>Grouped by how the technologies contribute to delivery—without arbitrary proficiency percentages.</p></div><div class="skills-grid">@for(group of skills;track group.title;let i=$index){<article class="skill-card surface"><span class="card-index">0{{i+1}}</span><h3>{{group.title}}</h3><p>{{group.description}}</p><div class="chips">@for(skill of group.skills;track skill){<span>{{skill}}</span>}</div></article>}</div></div></section>
-<section id="cloud" class="section cloud-section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">04 · Cloud delivery</p><h2>One connected path from<br><span>commit to operations.</span></h2></div><p>A concise deployment lifecycle reflected across the existing portfolio experience and skills.</p></div><div class="workflow glass">@for(item of workflow;track item.step;let last=$last){<article><span>{{item.step}}</span><div><h3>{{item.title}}</h3><p>{{item.detail}}</p></div></article>@if(!last){<b aria-hidden="true">→</b>}}</div><div class="cloud-notes"><article><span>Infrastructure</span><h3>AWS-native delivery</h3><p>EC2, S3, IAM, RDS, Lambda, CloudFront, and CloudWatch supporting secure application environments.</p></article><article><span>Platform</span><h3>Repeatable releases</h3><p>Containers, orchestration, deployment pipelines, rollback planning, and Linux-based operations.</p></article><article><span>Reliability</span><h3>Operate with confidence</h3><p>Monitoring, recovery, database tuning, system hardening, and production support.</p></article></div></div></section>
-<section id="projects" class="section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">05 · Selected work</p><h2>Case studies across product,<br><span>platform, and research.</span></h2></div><p>Every project retained from the original portfolio, presented around its engineering context and outcomes.</p></div><div class="projects-grid">@for(project of projects;track project.title;let i=$index){<article class="project-card surface" [class.featured]="project.featured"><div class="project-top"><span>{{project.category}}</span><small>{{project.year}}</small></div><div class="project-number">0{{i+1}}</div><h3>{{project.title}}</h3><p>{{project.description}}</p>@if(project.problem||project.solution||project.impact){<details><summary>View engineering brief <span>+</span></summary><div class="brief">@if(project.problem){<p><strong>Context</strong>{{project.problem}}</p>}@if(project.solution){<p><strong>Execution</strong>{{project.solution}}</p>}@if(project.impact){<p><strong>Outcome</strong>{{project.impact}}</p>}</div></details>}<div class="project-bottom"><div class="chips">@for(tech of project.technologies;track tech){<span>{{tech}}</span>}</div>@if(project.github){<a [href]="project.github" target="_blank" rel="noopener noreferrer">View GitHub ↗</a>}</div></article>}</div></div></section>
-<section id="education" class="section education-section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">06 · Education</p><h2>Academic foundations for<br><span>systems thinking.</span></h2></div><p>Formal education in computer science, cloud computing, distributed systems, and engineering.</p></div><div class="education-grid">@for(item of education;track item.degree){<article class="education-card surface"><div class="education-period">{{item.period}}</div><div><p class="institution">{{item.institution}}</p><h3>{{item.degree}}</h3><p>{{item.description}}</p><div class="chips">@for(highlight of item.highlights;track highlight){<span>{{highlight}}</span>}</div></div><strong class="score">{{item.score}}</strong></article>}</div></div></section>
-<section id="recognition" class="section"><div class="container reveal"><div class="section-head"><div><p class="eyebrow">07 · Recognition</p><h2>Milestones beyond<br><span>the day-to-day.</span></h2></div><p>Technical, academic, leadership, scholarship, and sporting recognition preserved from the original portfolio.</p></div><div class="recognition-grid">@for(item of recognitions;track item.title){<article class="recognition-card surface"><div><span>{{item.type}}</span><small>{{item.year}}</small></div><h3>{{item.title}}</h3><p class="institution">{{item.organization}}</p><p>{{item.description}}</p></article>}</div></div></section>
-<section id="contact" class="section contact-section"><div class="container reveal"><div class="contact-shell glass"><div class="contact-copy"><p class="eyebrow">08 · Contact</p><h2>Let’s build reliable,<br><span>scalable systems.</span></h2><p>I’m open to Senior Software Developer, Full Stack, DevOps, Cloud, Platform, and SDE-II opportunities.</p><a href="mailto:kvsaimadhav@gmail.com">kvsaimadhav&#64;gmail.com <span>↗</span></a><small>Based in India · Remote / hybrid opportunities</small></div><form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" (ngSubmit)="submitContact()" novalidate><input type="hidden" name="form-name" value="contact"><p class="honeypot"><label>Do not fill: <input name="bot-field"></label></p><div class="field-row"><label><span>Name</span><input [(ngModel)]="name" name="name" autocomplete="name" required minlength="3" placeholder="Your name"></label><label><span>Email</span><input [(ngModel)]="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></label></div><label><span>Message</span><textarea [(ngModel)]="message" name="message" rows="5" required minlength="11" placeholder="Tell me about the role, team, or project."></textarea></label><div class="form-footer"><button class="button primary" type="submit" [disabled]="!canSubmit||formStatus()==='sending'">{{formStatus()==='sending'?'Sending…':'Send message'}} <span>→</span></button><p aria-live="polite">@if(formStatus()==='success'){Message received. I’ll respond shortly.}@else if(formStatus()==='error'){Submission failed. Please email me directly.}@else{Professional and confidential communication.}</p></div></form></div></div></section>
+  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <section id="home" class="hero section">
+    <div class="hero-grid container">
+      <div class="hero-copy">
+        <p class="hero-status"><span class="status-dot" aria-hidden="true"></span> Open to senior engineering opportunities</p>
+        <h1 class="hero-title">
+          <span class="hero-title-first">Kaza Venkata</span>
+          <span class="hero-title-last">Sai Madhav</span>
+        </h1>
+        <p class="hero-role">Senior Software Developer</p>
+        <ul class="hero-disciplines" aria-label="Disciplines">
+          <li>Full Stack Engineering</li>
+          <li>DevOps</li>
+          <li>AWS</li>
+          <li>Kubernetes</li>
+          <li>Cloud Infrastructure</li>
+        </ul>
+        <p class="hero-summary">I build dependable software and cloud platforms across application delivery, infrastructure operations, automation, and production reliability—bringing four-plus years of hands-on engineering experience and team leadership.</p>
+        <div class="button-row">
+          <button class="button primary" type="button" (click)="scrollTo('experience')">Explore experience <span aria-hidden="true">→</span></button>
+          <a class="button secondary" href="assets/SaiMadhav_Resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a>
+          <button class="text-link" type="button" (click)="scrollTo('contact')">Contact me</button>
+        </div>
+        <div class="social-row" aria-label="Social profiles">
+          @for (social of socials; track social.label) {
+            <a class="social-icon" [href]="social.url" [attr.target]="social.url.startsWith('http') ? '_blank' : null" rel="noopener noreferrer" [attr.aria-label]="social.label" [attr.data-icon]="social.icon" [attr.data-tip]="social.label"><span class="glyph" aria-hidden="true"></span></a>
+          }
+        </div>
+      </div>
+
+      <aside class="hero-visual" aria-label="Engineering profile">
+        <figure class="portrait-wrap">
+          <span class="frame-corner tl" aria-hidden="true"></span>
+          <span class="frame-corner br" aria-hidden="true"></span>
+          <img src="assets/images/madhav-portfolio.png" alt="Kaza Venkata Sai Madhav" width="1024" height="1536" fetchpriority="high">
+          <figcaption class="availability"><span class="status-dot" aria-hidden="true"></span> Available</figcaption>
+        </figure>
+        <div class="spec-card glass">
+          <div class="panel-heading">
+            <span>Engineering profile</span>
+            <strong>Build. Automate. Operate.</strong>
+          </div>
+          <dl class="signal-grid">
+            <div><dt>Years experience</dt><dd>4+</dd></div>
+            <div><dt>Team leadership</dt><dd>15</dd></div>
+            <div><dt>Cloud delivery</dt><dd>AWS</dd></div>
+            <div><dt>Supported SLA</dt><dd>99.9%</dd></div>
+          </dl>
+          <p class="terminal-line"><span aria-hidden="true">$</span> shipping reliable systems<span class="cursor" aria-hidden="true"></span></p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="stack-strip container" aria-label="Working stack">
+      <span class="stack-label">Working stack</span>
+      <ul>
+        <li>Angular</li><li>TypeScript</li><li>Node.js</li><li>Java</li><li>AWS</li><li>Docker</li><li>Kubernetes</li><li>Jenkins</li><li>GitHub Actions</li><li>Oracle DB</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 01 About ───────────────────────── -->
+  <section id="about" class="section about-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>01</span>About</p>
+          <h2>Engineering with an <em>operations mindset.</em></h2>
+        </div>
+        <p class="section-lede">I work at the intersection of full-stack development, systems administration, cloud operations, and DevOps delivery—where clean application architecture meets real production responsibility.</p>
+      </header>
+
+      <div class="about-layout">
+        <figure class="about-portrait">
+          <img src="assets/images/profile-photo-v1.jpg" alt="Portrait of Kaza Venkata Sai Madhav" width="896" height="1113" loading="lazy" decoding="async">
+          <figcaption><span>K. V. Sai Madhav</span><span>Senior Software Developer</span></figcaption>
+        </figure>
+
+        <div class="about-story">
+          <p class="about-lead">My approach is grounded in ownership: understand the system, remove operational friction, automate repeatable work, and leave services more resilient than I found them. Across software, databases, and infrastructure, I balance delivery speed with security, observability, and long-term maintainability.</p>
+          <p>At Ekluvya, that means leading engineers through the SDLC while supporting AWS environments, CI/CD, and multiple product initiatives. Earlier roles span defense-grade projects, mission-critical Oracle systems, and enterprise Java applications.</p>
+
+          <ol class="principles stagger">
+            <li><span>01</span><div><h3>Full-stack delivery</h3><p>Modern frontend, APIs, enterprise Java, and data systems.</p></div></li>
+            <li><span>02</span><div><h3>Cloud infrastructure</h3><p>AWS environments designed for security, scale, and cost awareness.</p></div></li>
+            <li><span>03</span><div><h3>Production reliability</h3><p>Automation, monitoring, recovery, and operational continuity.</p></div></li>
+            <li><span>04</span><div><h3>Technical leadership</h3><p>Practical mentoring and coordinated delivery across engineering teams.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 02 Experience ───────────────────────── -->
+  <section id="experience" class="section experience-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>02</span>Experience</p>
+          <h2>From application code to <em>production operations.</em></h2>
+        </div>
+        <p class="section-lede">Four roles across product engineering, defense programs, databases, and enterprise software—each with increasing ownership and technical breadth.</p>
+      </header>
+
+      <ol class="timeline">
+        @for (experience of experiences; track experience.company; let i = $index) {
+          <li class="role" [class.current]="experience.current">
+            <div class="role-meta">
+              <span class="timeline-marker" aria-hidden="true">{{ ('0' + (experiences.length - i)).slice(-2) }}</span>
+              @if (experience.current) {
+                <span class="current-badge"><span class="status-dot" aria-hidden="true"></span> Current role</span>
+              }
+              <p class="role-period">{{ experience.period }}</p>
+              <p class="role-duration">{{ experience.duration }}</p>
+            </div>
+            <div class="role-body">
+              <p class="company">{{ experience.company }}</p>
+              <h3>{{ experience.role }}</h3>
+              <ul class="role-highlights">
+                @for (item of experience.highlights; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+              <ul class="chips" aria-label="Technologies">
+                @for (tech of experience.technologies; track tech) {
+                  <li>{{ tech }}</li>
+                }
+              </ul>
+            </div>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 03 Skills ───────────────────────── -->
+  <section id="skills" class="section skills-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>03</span>Capabilities</p>
+          <h2>A practical, production-ready <em>engineering toolkit.</em></h2>
+        </div>
+        <p class="section-lede">Grouped by how the technologies contribute to delivery—without arbitrary proficiency percentages.</p>
+      </header>
+
+      <div class="skills-grid stagger">
+        @for (group of skills; track group.title; let i = $index) {
+          <article class="skill-card surface">
+            <div class="skill-card-head">
+              <span class="card-index">0{{ i + 1 }}</span>
+              <span class="skill-count">{{ group.skills.length }} technologies</span>
+            </div>
+            <h3>{{ group.title }}</h3>
+            <p>{{ group.description }}</p>
+            <ul class="tags">
+              @for (skill of group.skills; track skill) {
+                <li>{{ skill }}</li>
+              }
+            </ul>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 04 Cloud delivery ───────────────────────── -->
+  <section id="cloud" class="section cloud-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>04</span>Cloud delivery</p>
+          <h2>One connected path from <em>commit to operations.</em></h2>
+        </div>
+        <p class="section-lede">A concise deployment lifecycle reflected across the existing portfolio experience and skills.</p>
+      </header>
+
+      <ol class="pipeline glass stagger" aria-label="Delivery lifecycle">
+        @for (item of workflow; track item.step) {
+          <li>
+            <span class="pipeline-node">{{ item.step }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.detail }}</p>
+          </li>
+        }
+      </ol>
+
+      <div class="cloud-notes stagger">
+        <article>
+          <span>Infrastructure</span>
+          <h3>AWS-native delivery</h3>
+          <p>EC2, S3, IAM, RDS, Lambda, CloudFront, and CloudWatch supporting secure application environments.</p>
+        </article>
+        <article>
+          <span>Platform</span>
+          <h3>Repeatable releases</h3>
+          <p>Containers, orchestration, deployment pipelines, rollback planning, and Linux-based operations.</p>
+        </article>
+        <article>
+          <span>Reliability</span>
+          <h3>Operate with confidence</h3>
+          <p>Monitoring, recovery, database tuning, system hardening, and production support.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 05 Projects ───────────────────────── -->
+  <section id="projects" class="section projects-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>05</span>Selected work</p>
+          <h2>Case studies across product, <em>platform, and research.</em></h2>
+        </div>
+        <p class="section-lede">Every project retained from the original portfolio, presented around its engineering context and outcomes.</p>
+      </header>
+
+      <div class="projects-grid">
+        @for (project of projects; track project.title; let i = $index) {
+          <article class="project-card surface" [class.featured]="project.featured">
+            <div class="project-main">
+              <div class="project-top">
+                <span>{{ project.category }}</span>
+                <small>{{ project.year }}</small>
+              </div>
+              <div class="project-number" aria-hidden="true">0{{ i + 1 }}</div>
+              <h3>{{ project.title }}</h3>
+              <p class="project-description">{{ project.description }}</p>
+            </div>
+            @if (project.problem || project.solution || project.impact) {
+              <details [open]="project.featured">
+                <summary>Engineering brief <span aria-hidden="true">+</span></summary>
+                <div class="brief">
+                  @if (project.problem) {
+                    <p><strong>Context</strong>{{ project.problem }}</p>
+                  }
+                  @if (project.solution) {
+                    <p><strong>Execution</strong>{{ project.solution }}</p>
+                  }
+                  @if (project.impact) {
+                    <p><strong>Outcome</strong>{{ project.impact }}</p>
+                  }
+                </div>
+              </details>
+            }
+            <div class="project-bottom">
+              <ul class="tags" aria-label="Technologies">
+                @for (tech of project.technologies; track tech) {
+                  <li>{{ tech }}</li>
+                }
+              </ul>
+              @if (project.github) {
+                <a class="project-link" [href]="project.github" target="_blank" rel="noopener noreferrer">View GitHub <span aria-hidden="true">↗</span></a>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 06 Education ───────────────────────── -->
+  <section id="education" class="section education-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>06</span>Education</p>
+          <h2>Academic foundations for <em>systems thinking.</em></h2>
+        </div>
+        <p class="section-lede">Formal education in computer science, cloud computing, distributed systems, and engineering.</p>
+      </header>
+
+      <ol class="ledger stagger">
+        @for (item of education; track item.degree) {
+          <li class="education-row">
+            <p class="education-period">{{ item.period }}</p>
+            <div class="education-main">
+              <p class="institution">{{ item.institution }}</p>
+              <h3>{{ item.degree }}</h3>
+              <p>{{ item.description }}</p>
+              <ul class="chips" aria-label="Highlights">
+                @for (highlight of item.highlights; track highlight) {
+                  <li>{{ highlight }}</li>
+                }
+              </ul>
+            </div>
+            <p class="score"><span>Score</span><strong>{{ item.score }}</strong></p>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 07 Recognition ───────────────────────── -->
+  <section id="recognition" class="section recognition-section">
+    <div class="container reveal">
+      <header class="section-head">
+        <div>
+          <p class="eyebrow"><span>07</span>Recognition</p>
+          <h2>Milestones beyond <em>the day-to-day.</em></h2>
+        </div>
+        <p class="section-lede">Technical, academic, leadership, scholarship, and sporting recognition preserved from the original portfolio.</p>
+      </header>
+
+      <div class="recognition-grid stagger">
+        @for (item of recognitions; track item.title) {
+          <article class="recognition-card">
+            <div class="recognition-top">
+              <span>{{ item.type }}</span>
+              <small>{{ item.year }}</small>
+            </div>
+            <h3>{{ item.title }}</h3>
+            <p class="institution">{{ item.organization }}</p>
+            <p>{{ item.description }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── 08 Contact ───────────────────────── -->
+  <section id="contact" class="section contact-section">
+    <div class="container reveal">
+      <div class="contact-shell">
+        <div class="contact-copy">
+          <p class="eyebrow"><span>08</span>Contact</p>
+          <h2>Let’s build reliable, <em>scalable systems.</em></h2>
+          <p>I’m open to Senior Software Developer, Full Stack, DevOps, Cloud, Platform, and SDE-II opportunities.</p>
+          <a class="contact-email" href="mailto:kvsaimadhav@gmail.com">kvsaimadhav&#64;gmail.com <span aria-hidden="true">↗</span></a>
+          <small>Based in India · Remote / hybrid opportunities</small>
+        </div>
+
+        <form class="contact-form glass" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" (ngSubmit)="submitContact()" novalidate>
+          <input type="hidden" name="form-name" value="contact">
+          <p class="honeypot" aria-hidden="true"><label>Do not fill: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <div class="field-row">
+            <label>
+              <span>Name</span>
+              <input [(ngModel)]="name" name="name" autocomplete="name" required minlength="3" placeholder="Your name">
+            </label>
+            <label>
+              <span>Email</span>
+              <input [(ngModel)]="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+            </label>
+          </div>
+          <label>
+            <span>Message</span>
+            <textarea [(ngModel)]="message" name="message" rows="5" required minlength="11" placeholder="Tell me about the role, team, or project."></textarea>
+          </label>
+          <div class="form-footer">
+            <button class="button primary" type="submit" [disabled]="!canSubmit || formStatus() === 'sending'">{{ formStatus() === 'sending' ? 'Sending…' : 'Send message' }} <span aria-hidden="true">→</span></button>
+            <p class="form-status" [class.success]="formStatus() === 'success'" [class.error]="formStatus() === 'error'" aria-live="polite">@if (formStatus() === 'success') {Message received. I’ll respond shortly.} @else if (formStatus() === 'error') {Submission failed. Please email me directly.} @else {Professional and confidential communication.}</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
-<footer><div class="container"><div class="footer-brand"><span class="brand-mark">SM</span><div><strong>K. V. Sai Madhav</strong><p>Senior Software Developer · Cloud & Platform Engineering</p></div></div><nav aria-label="Footer navigation">@for(item of navItems.slice(0,6);track item[0]){<button type="button" (click)="scrollTo(item[0])">{{item[1]}}</button>}</nav><div class="footer-bottom"><span>© {{year}} Sai Madhav. Built with Angular.</span><button type="button" (click)="scrollTo('home')">Back to top ↑</button></div></div></footer>
+
+<!-- ───────────────────────── Footer ───────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-wordmark" aria-hidden="true">Sai Madhav<span>.</span></p>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">SM</span>
+        <div>
+          <strong>K. V. Sai Madhav</strong>
+          <p>Senior Software Developer · Cloud &amp; Platform Engineering</p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        @for (item of navItems; track item[0]) {
+          <button type="button" (click)="scrollTo(item[0])">{{ item[1] }}</button>
+        }
+      </nav>
+      <ul class="footer-social" aria-label="Social profiles">
+        @for (social of socials; track social.label) {
+          <li><a [href]="social.url" [attr.target]="social.url.startsWith('http') ? '_blank' : null" rel="noopener noreferrer" [attr.data-icon]="social.icon"><span class="glyph" aria-hidden="true"></span>{{ social.label }}</a></li>
+        }
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ year }} Sai Madhav. Built with Angular.</span>
+      <button type="button" (click)="scrollTo('home')">Back to top <span aria-hidden="true">↑</span></button>
+    </div>
+  </div>
+</footer>

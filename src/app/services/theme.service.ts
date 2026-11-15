@@ -23,7 +23,7 @@ export class ThemeService {
     this.theme.set(theme);
     document.documentElement.dataset['theme'] = theme;
     document.documentElement.style.colorScheme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#07111f' : '#f4f7fb');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0b0c0f' : '#f6f4ef');
     if (persist) localStorage.setItem(this.key, theme);
   }
 }
